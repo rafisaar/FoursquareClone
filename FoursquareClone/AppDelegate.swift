@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ParseSwift.initialize(applicationId: "9LIUWXEJM6yscQrgPKxsltlTF5hHfu22cv8XjfRA", clientKey: "n17SWSSq7wCZrAgfJgVEh1K4qFoFEJCZUeDn437M", serverURL: URL(string: "https://parseapi.back4app.com/")!)
 
-        // test
+        
         
         return true
     }
