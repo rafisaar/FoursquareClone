@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,7 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        
+        let currentUser = PFUser.current()      // gets Parse curent user if already logged in
+        if currentUser != nil {                 // i.e. some user is indeed already logged in
+            
+            // performing Segue in viewDidLoad will not work so we need to make it here.  But we cannot Segue in SceneDelegate so instead we're moving the entry point to the right VC using the folowing code:
+            let board = UIStoryboard(name: "Main", bundle: nil)
+            let navigationController = board.instantiateViewController(identifier: "navigationController") as! UINavigationController       // navigationController is the ID given to it in the storyboard and casting to its correct class type
+            window?.rootViewController = navigationController
+        }
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }
