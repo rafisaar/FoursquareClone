@@ -17,6 +17,7 @@
 		01FAB29D26C40488004D741C /* AddPlaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAB29C26C40488004D741C /* AddPlaceVC.swift */; };
 		01FAB29F26C405E8004D741C /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAB29E26C405E8004D741C /* MapVC.swift */; };
 		01FAB2A126C40FA5004D741C /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAB2A026C40FA5004D741C /* DetailsVC.swift */; };
+		01FAB2A326C41A0E004D741C /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAB2A226C41A0E004D741C /* PlaceModel.swift */; };
 		491024F5E0489F751DF5BB84 /* Pods_FoursquareClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81C4B275C43FB23DD98E53CD /* Pods_FoursquareClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		01FAB29C26C40488004D741C /* AddPlaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceVC.swift; sourceTree = "<group>"; };
 		01FAB29E26C405E8004D741C /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		01FAB2A026C40FA5004D741C /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
+		01FAB2A226C41A0E004D741C /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		81C4B275C43FB23DD98E53CD /* Pods_FoursquareClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoursquareClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E3300BCECD8BBC0F6360AE3 /* Pods-FoursquareClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoursquareClone.debug.xcconfig"; path = "Target Support Files/Pods-FoursquareClone/Pods-FoursquareClone.debug.xcconfig"; sourceTree = "<group>"; };
 		9CFFF2E9B04CB506EB5893B9 /* Pods-FoursquareClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoursquareClone.release.xcconfig"; path = "Target Support Files/Pods-FoursquareClone/Pods-FoursquareClone.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				01FAB29C26C40488004D741C /* AddPlaceVC.swift */,
 				01FAB29E26C405E8004D741C /* MapVC.swift */,
 				01FAB2A026C40FA5004D741C /* DetailsVC.swift */,
+				01FAB2A226C41A0E004D741C /* PlaceModel.swift */,
 				0130183E26C152D600150FBF /* Main.storyboard */,
 				0130184126C152D800150FBF /* Assets.xcassets */,
 				0130184326C152D800150FBF /* LaunchScreen.storyboard */,
@@ -219,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0130183D26C152D600150FBF /* SignUpVC.swift in Sources */,
+				01FAB2A326C41A0E004D741C /* PlaceModel.swift in Sources */,
 				01FAB29F26C405E8004D741C /* MapVC.swift in Sources */,
 				0130183926C152D600150FBF /* AppDelegate.swift in Sources */,
 				01FAB29B26C3DF83004D741C /* PlacesVC.swift in Sources */,

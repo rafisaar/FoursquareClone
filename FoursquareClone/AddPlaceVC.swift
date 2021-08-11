@@ -8,6 +8,17 @@
 
 import UIKit
 
+/* can use global variables to pass on information between classes/views but it's usually not advisable to do so, especially when working with a team, others may change global variable values without us knowing it
+ Gloabl variables are declared outside the class and are known to other classes as well.
+ if using them, they're defined in this way:
+
+var globalName = ""
+var globalType = ""
+var globalAtmosphere = ""
+ 
+*/
+
+
 class AddPlaceVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var placeNameText: UITextField!
@@ -19,7 +30,7 @@ class AddPlaceVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        nextButton.isEnabled = false
+//        nextButton.isEnabled = false
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureRecognizer)
@@ -48,14 +59,35 @@ class AddPlaceVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         placeImageView.image = info[.originalImage] as? UIImage
-        nextButton.isEnabled = true                        // enable Next button only after user chooses an image
+ //       nextButton.isEnabled = true                        // enable Next button only after user chooses an image
         self.dismiss(animated: true, completion: nil)        // go back to original view controller
 
     }
 
     
     @IBAction func nextButtonClicked(_ sender: Any) {
-        performSegue(withIdentifier: "toMapVC", sender: nil)
+        // globalName = placeNameText.text              -- if we'd use global variables, this is where we would pass on the information to the next VC
+        
+        if placeNameText.text != "" && placeTypeText.text != "" && placeAtmosphereText.text != "" {
+            if let chosenImage = placeImageView.image {
+                let placeModel = PlaceModel.sharedInstance          // because it has a private intializer, we can only use the single instance
+                placeModel.placeName = placeNameText.text!
+                placeModel.placeType = placeTypeText.text!
+                placeModel.placeAtmosphere = placeAtmosphereText.text!
+                placeModel.placeImage = chosenImage
+                
+                performSegue(withIdentifier: "toMapVC", sender: nil)
+            }
+            
+        } else {
+            
+            let alert = UIAlertController(title: "Error", message: "Missing info", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+            alert.addAction(okButton)
+            present(alert, animated: true, completion: nil)
+            
+        }
+        
     }
     
     
