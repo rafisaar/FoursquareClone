@@ -8,6 +8,7 @@ target 'FoursquareClone' do
   # Pods for FoursquareClone
 
 pod 'ParseSwift'
+pod 'Parse'
 
 
 end
