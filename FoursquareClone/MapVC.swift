@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
+//import CoreLocation
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
     var locationManager = CLLocationManager()
+    var chosenLatitude = ""
+    var chosenLongitude = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +28,40 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
         mapView.delegate = self
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest       // better accuracy will comsume more battery
+        locationManager.requestWhenInUseAuthorization()                 // defines when location will be used - this will request authorization from the user
+        locationManager.startUpdatingLocation()                         // don't forget to update Info.plist with information to the user about accessing this data
+        
+        
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(chooseLocation(myGestureRecognizer:)))
+        gestureRecognizer.minimumPressDuration = 3                          // will require minimum 3 seconds.  Less than that is too short usually
+        mapView.addGestureRecognizer(gestureRecognizer)
+        
+
         
     }
     
+    
+    @objc func chooseLocation(myGestureRecognizer:UIGestureRecognizer) {
+        
+        if myGestureRecognizer.state == .began {
+            
+            let touchedPoint = myGestureRecognizer.location(in: self.mapView)
+            let touchedCoordinates = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
+                                    
+            let annotation = MKPointAnnotation()                            // creates a pin
+            annotation.coordinate = touchedCoordinates
+            annotation.title = PlaceModel.sharedInstance.placeName
+            annotation.subtitle = PlaceModel.sharedInstance.placeType
+            self.mapView.addAnnotation(annotation)
+            
+            self.chosenLatitude = String(touchedCoordinates.latitude)
+            self.chosenLongitude = String(touchedCoordinates.longitude)
+            
+        }
+        
+    }
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()          // so that when user changes location in the map it won't invoke this function again
