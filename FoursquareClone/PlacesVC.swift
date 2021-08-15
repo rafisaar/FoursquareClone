@@ -15,6 +15,7 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var placeNameArray = [String]()
     var placeIdArray = [String]()
+    var selectedPlaceId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,7 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     
                     for object in objects! {
                         if let placeName = object.object(forKey: "name") as? String {
-                            if let placeId = object.objectId as? String {
+                            if let placeId = object.objectId {
                                 self.placeNameArray.append(placeName)
                                 self.placeIdArray.append(placeId)
                                  
@@ -60,6 +61,21 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailsVC" {
+            let destinationVC = segue.destination as! DetailsVC
+            destinationVC.chosenPlaceId = selectedPlaceId
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedPlaceId = placeIdArray[indexPath.row]
+        self.performSegue(withIdentifier: "toDetailsVC", sender: nil)
+    }
+    
     
     @objc func addButtonClicked() {
         performSegue(withIdentifier: "toAddPlaceVC", sender: nil)
