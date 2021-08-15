@@ -354,6 +354,7 @@
         <image name="Tap to select image" width="320" height="320"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="694-e8-gSL"/>
         <segue reference="1UF-Ht-jB9"/>
     </inferredMetricsTieBreakers>
 </document>
