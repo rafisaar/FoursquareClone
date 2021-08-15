@@ -69,7 +69,7 @@ class AddPlaceVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         // globalName = placeNameText.text              -- if we'd use global variables, this is where we would pass on the information to the next VC
         
         if placeNameText.text != "" && placeTypeText.text != "" && placeAtmosphereText.text != "" {
-            if let chosenImage = placeImageView.image {
+            if let chosenImage = placeImageView.image {             // will only succeed if image was indeed chosen already
                 let placeModel = PlaceModel.sharedInstance          // because it has a private intializer, we can only use the single instance
                 placeModel.placeName = placeNameText.text!
                 placeModel.placeType = placeTypeText.text!

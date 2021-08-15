@@ -9,14 +9,15 @@
 import UIKit
 import MapKit
 //import CoreLocation
+import Parse
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
     var locationManager = CLLocationManager()
-    var chosenLatitude = ""
-    var chosenLongitude = ""
+    // var chosenLatitude = ""  -- replaced by entries in the singleton class model to be consistent
+    // var chosenLongitude = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +56,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             annotation.subtitle = PlaceModel.sharedInstance.placeType
             self.mapView.addAnnotation(annotation)
             
-            self.chosenLatitude = String(touchedCoordinates.latitude)
-            self.chosenLongitude = String(touchedCoordinates.longitude)
+            PlaceModel.sharedInstance.placeLatitude = String(touchedCoordinates.latitude)
+            PlaceModel.sharedInstance.placeLongitude = String(touchedCoordinates.longitude)
             
         }
         
@@ -75,8 +76,36 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @objc func saveButtonClicked() {
         // PARSE
         
+        let placeModel = PlaceModel.sharedInstance
+        
+        let object = PFObject(className: "Places")
+        object["name"] = placeModel.placeName
+        object["type"] = placeModel.placeType
+        object["atmosphere"] = placeModel.placeAtmosphere
+        // object["latitude"] = self.chosenLatitude   --  for consistency, we'll remove those and add 2 more entries to our singleton class model
+        // object["longitude"] = self.chosenLongitude
+        object["latitude"] = placeModel.placeLatitude
+        object["longitude"] = placeModel.placeLongitude
+        
+        if let imageData = placeModel.placeImage.jpegData(compressionQuality: 0.5) {
+            object["image"] = PFFileObject(name: "\(placeModel.placeName).jpg", data: imageData)
+        }
+        
+        object.saveInBackground { (success, error) in
+            if error != nil {
+                let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+                 
+            } else {
+                self.performSegue(withIdentifier: "fromMapVCtoPlacesVC", sender: nil)
+            }
+        }
+        
     }
 
+    
     @objc func backButtonClicked() {
         // navigationController?.popViewController(animated: true)  -- won't work because we have another navigation controller in between
         self.dismiss(animated: true, completion: nil)   // will dismiss and go back to where we were previously
